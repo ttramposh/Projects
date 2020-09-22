@@ -1,7 +1,7 @@
 # Projects
 Repo for personal projects
 
-To generate the wildwire tracking map, run scripts in following order:  
+To generate the wildfire tracking map, run scripts in following order:  
 1.) fires pipeline.R   
 2.) wildfire map.Rmd  
 
