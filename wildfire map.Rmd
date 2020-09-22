@@ -1,0 +1,52 @@
+---
+title: "Map of Metered Sites and Ongoing Fires in Western States"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: columns
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(flexdashboard)
+```
+
+## Column {data-width=100}
+-------------------------------------
+
+## Row {data-width=800}
+-------------------------------------
+
+### Metered Sites - Click Blue Markers!
+```{r message=FALSE}
+load('/wildfire_spatial_data.Rdata')
+
+library(leaflet)
+library(dplyr)
+
+leaflet(
+  options = leafletOptions(
+   minZoom = 6,
+   preferCanvas = TRUE
+  )
+) %>%
+  addProviderTiles(provider = "Esri.NatGeoWorldMap") %>%
+  # addMarkers(
+  #   data = site_coord,
+  #   lng = ~long,
+  #   lat = ~lat,
+  #   popup = ~site_id
+  # ) %>%
+   addPolygons(
+    data = poly_data_frame,
+    popup = ~IncidentName,
+    color = "red"
+  ) %>%
+  setView(
+    lng = -121.904711,
+    lat = 45.261010,
+    zoom = 6
+  )
+```
+
+## Column {data-width=100}
+-------------------------------------
