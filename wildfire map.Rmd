@@ -1,5 +1,5 @@
 ---
-title: "Map of Metered Sites and Ongoing Fires in Western States"
+title: "Map of Important Sites and Ongoing Fires in Western States"
 output:
   flexdashboard::flex_dashboard:
     orientation: columns

@@ -24,7 +24,7 @@ cron_add(
   frequency = 'daily',
   days_of_week = 'Mon',
   at = '9:15',
-  id = 'wildfire map',
+  id = 'wildfire_map',
   description = 'Knit wildfire map html'
 )
 
