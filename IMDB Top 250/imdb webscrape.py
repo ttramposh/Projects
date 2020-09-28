@@ -40,7 +40,7 @@ flatten = lambda l: [item for sublist in l for item in sublist]
 df = pd.DataFrame(flatten(top_250_movies), columns = ['Rank', 'Movie', 'Year', 'Director', 'Cast', 'Rating', 'Reviews'])
 print(df)
 
-#df.to_csv('test.csv')
+#df.to_csv('imdb_top_movies.csv')
 
 # Find average ratings of directors with more than 1 movie in the top 250
 dir_movies = df.groupby('Director')['Movie'].nunique()
