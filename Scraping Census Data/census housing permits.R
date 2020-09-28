@@ -48,7 +48,7 @@ ggplot() +
 
 counties <- counties %>%
   group_by(region, subregion) %>%
-  mutate(west = ifelse(min(long) <= mean(roads_map$long) + .65, "West", "East"))
+  mutate(west = ifelse(min(long) <= mean(roads_map$long) + .68, "West", "East"))
 table(counties$west)
 
 state_boundary <- map_data("state") %>%
@@ -71,54 +71,6 @@ west_cty <- counties %>%
   select(region, subregion) %>%
   unique()
 
-# 2018 Census data
-census <- read.csv("~/Desktop/ACEEE 2020/CensusData.csv", stringsAsFactors = FALSE, skip = 1)
-colnames(census) <- gsub("[[:punct:]]", "", colnames(census))
-census <- census %>%
-  select(GeographicAreaName, contains("hous")) %>%
-  tidyr::separate(col = GeographicAreaName, into = c("County", "State"), sep = ", ")
-
-state_totals <- census %>%
-  filter(County %in% c("Idaho", "Montana", "Oregon", "Washington")) %>%
-  group_by(State = County) %>%
-  summarize(HousingUnits = format(sum(EstimateTotalhousingunits), big.mark = ","))
-
-census <- census %>%
-  filter(County %in% c("Idaho", "Montana", "Oregon", "Washington") == FALSE)
-
-census <- census %>%
-  mutate(County = tolower(gsub(" County", "", County)),
-         State = tolower(State))
-table(census$County %in% counties$subregion)
-n_distinct(counties$subregion)
-
-counties <- counties %>%
-  left_join(census %>%
-              group_by(County, State) %>%
-              summarize(HousingUnits = sum(EstimateTotalhousingunits)),
-            by = c("region" = "State", "subregion" = "County"))
-
-# Plot 2018 housing starts
-ggplot() +
-  geom_polygon(data = state_boundary, aes(x = long, y = lat, group = group), color = "black", fill = NA, size = 1) +
-  geom_polygon(data = counties, aes(x = long, y = lat, group = group, fill = HousingUnits), color = "black", alpha = .5, size = .5) +
-  scale_fill_gradient(low = "light blue", high = "red", limits = c(10000, 700000)) +
-  geom_polygon(data = roads_map,
-               aes(x = long, y = lat, group = group),
-               color = "red", fill = "red", size = 0.5) +
-  coord_map() +
-  theme_map() +
-  theme(legend.position = "right") +
-  guides(fill = guide_legend(title = "Housing Starts"))
-
-housing_starts <- counties %>%
-  group_by(region, subregion, west) %>% 
-  summarize(HousingStarts = unique(HousingUnits)) %>%
-  ungroup() %>%
-  mutate(group = ifelse(region %in% c("oregon", "washington"), "OR_WA", "ID_MT")) %>%
-  group_by(region) %>%
-  summarize(HousingStarts = format(sum(HousingStarts, na.rm = TRUE), big.mark = ","))
-housing_starts
 
 # ---- Web scraping census.gov -----
 # From 2019 quick facts table
@@ -154,7 +106,7 @@ census_data <- census_housing_permits %>%
   tidyr::separate(col = county, into = c("county", "state"), sep = ", ")
 
 county_housing_permits <- counties %>%
-  select(-HousingUnits) %>%
+  select(-county_string) %>%
   left_join(census_data, by = c("subregion" = "county", "region" = "state"))
 
 county_housing_permits %>%
@@ -168,7 +120,7 @@ county_housing_permits %>%
 ggplot() +
   geom_polygon(data = state_boundary, aes(x = long, y = lat, group = group), color = "black", fill = NA, size = 1) +
   geom_polygon(data = county_housing_permits, aes(x = long, y = lat, group = group, fill = housing_permits_est), color = "black", alpha = .5, size = .5) +
-  scale_fill_gradient(low = "light blue", high = "red", breaks = c(100, 5000, 10000, 15000), labels = c("100", "5,000", "10,000", "15,000"), na.value = "white") +
+  scale_fill_gradient(low = "light blue", high = "red", breaks = c(100, 5000, 10000, 15000), labels = c("< 100", "5,000", "10,000", "15,000"), na.value = "white") +
   geom_polygon(data = roads_map,
                aes(x = long, y = lat, group = group),
                color = "red", fill = "red", size = 0.5) +
