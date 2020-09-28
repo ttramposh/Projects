@@ -23,6 +23,13 @@ load('/wildfire_spatial_data.Rdata')
 library(leaflet)
 library(dplyr)
 
+# Create marker dataset
+site_coord <- tibble(
+  site_id = c("Estacada", "Bittner Creek", "Grizzly Peak"),
+  lng = c(45.294382, 45.194914, 44.643116),
+  lat = c(-122.353229, -122.359511, -121.851558)
+)
+
 leaflet(
   options = leafletOptions(
    minZoom = 6,
@@ -30,12 +37,12 @@ leaflet(
   )
 ) %>%
   addProviderTiles(provider = "Esri.NatGeoWorldMap") %>%
-  # addMarkers(
-  #   data = site_coord,
-  #   lng = ~long,
-  #   lat = ~lat,
-  #   popup = ~site_id
-  # ) %>%
+  addMarkers(
+    data = site_coord,
+    lng = ~long,
+    lat = ~lat,
+    popup = ~site_id
+  ) %>%
    addPolygons(
     data = poly_data_frame,
     popup = ~IncidentName,
