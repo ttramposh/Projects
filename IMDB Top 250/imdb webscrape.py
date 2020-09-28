@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import re
 import pandas as pd
+import numpy as np
 
 imdb_url = 'https://www.imdb.com/chart/top/?ref_=nv_mv_250'
 imdb_r = requests.get(imdb_url)
@@ -12,8 +13,8 @@ print(imdb_html)
 imdb_soup = BeautifulSoup(imdb_html)
 print(imdb_soup)
 
-imdb_pretty_soup = imdb_soup.prettify()
-print(imdb_pretty_soup)
+#imdb_pretty_soup = imdb_soup.prettify()
+#print(imdb_pretty_soup)
 
 top_250_movies = []
 for movie in imdb_soup.findAll('tr')[1:250]:
@@ -42,9 +43,10 @@ print(df)
 
 #df.to_csv('imdb_top_movies.csv')
 
-# Find average ratings of directors with more than 1 movie in the top 250
+# Find weighted average ratings of directors with more than 1 movie in the top 250
 dir_movies = df.groupby('Director')['Movie'].nunique()
-dir_ratings = df.groupby('Director')['Rating'].mean()
+dir_ratings = df.groupby('Director').apply(lambda x: np.average(x['Rating'], weights = x['Reviews']))
+dir_ratings.name = 'Rating'
 
 dir_summary = pd.merge(dir_movies, dir_ratings, on = 'Director', how = 'left')
 dir_summary = dir_summary[dir_summary['Movie'] > 1]
