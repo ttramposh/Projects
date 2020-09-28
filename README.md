@@ -2,6 +2,7 @@
 Repo for personal projects
 
 ## Wildfire - R
+Pulls current wildfire spatial data for preprocessing and plotting. The map is created using RMarkdown for viewing in your browser.
 To generate the wildfire tracking map, run scripts in following order:  
 1.) fires pipeline.R   
 2.) wildfire map.Rmd  
