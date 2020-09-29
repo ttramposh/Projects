@@ -18,7 +18,7 @@ library(flexdashboard)
 
 ### Metered Sites - Click Blue Markers!
 ```{r message=FALSE}
-load('/wildfire_spatial_data.Rdata')
+load('wildfire_spatial_data.Rdata')
 
 library(leaflet)
 library(dplyr)
@@ -26,8 +26,8 @@ library(dplyr)
 # Create marker dataset
 site_coord <- tibble(
   site_id = c("Estacada", "Bittner Creek", "Grizzly Peak"),
-  lng = c(45.294382, 45.194914, 44.643116),
-  lat = c(-122.353229, -122.359511, -121.851558)
+  long = c(-122.353229, -122.359511, -121.851558),
+  lat = c(45.294382, 45.194914, 44.643116)
 )
 
 leaflet(
