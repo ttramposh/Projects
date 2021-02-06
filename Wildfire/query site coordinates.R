@@ -19,4 +19,3 @@ site_coordinates <- dbGetQuery(
 # Disconnect from db
 dbDisconnect(database);rm(database)
 gc()
-
