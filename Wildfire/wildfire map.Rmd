@@ -6,8 +6,10 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+
 knitr::opts_chunk$set(echo = FALSE)
 library(flexdashboard)
+
 ```
 
 ## Column {data-width=100}
@@ -18,6 +20,7 @@ library(flexdashboard)
 
 ### Metered Sites - Click Blue Markers!
 ```{r message=FALSE}
+
 load('wildfire_spatial_data.Rdata')
 
 library(leaflet)
@@ -53,6 +56,7 @@ leaflet(
     lat = 45.261010,
     zoom = 6
   )
+
 ```
 
 ## Column {data-width=100}
