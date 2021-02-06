@@ -35,4 +35,3 @@ cron_ls()
 # cron_rm(id = "fires_pipeline")
 # cron_rm(id = 'wildfire map')
 cron_ls()
-
