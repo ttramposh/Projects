@@ -51,4 +51,3 @@ poly_data_frame@data <- left_join(poly_data_frame@data, data, by = c("newID" = "
 
 # Save out R data for Rmarkdown script
 save(poly_data_frame, file = 'wildfire_spatial_data.Rdata')
-
