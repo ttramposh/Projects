@@ -130,4 +130,3 @@ ggplot() +
         legend.text = element_text(size = 18),
         legend.title = element_text(size = 18)) +
   guides(fill = guide_legend(title = "Housing Starts"))
-
