@@ -22,5 +22,8 @@ These data include:
 - Rating
 - Number of reviews
 
+## Stock Sentiment - Python
+Pulls recent news about selected stocks through newsapi.org API, converts json to pandas dataframe, and runs through NLP procedures to rate sentiment.
+
 ## Scraping Census Data - R
 Webscraping the Census page for residential housing starts in 2019 as part of a research paper.
