@@ -144,4 +144,3 @@ plt.scatter(x = y_pred, y = y_test, color = 'blue')
 plt.xlabel("Predicted Rating")
 plt.ylabel("Actual Rating")
 plt.title("IMDb Top 250 Movie Ratings")
-
